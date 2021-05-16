@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="de" dir="ltr">
+ <head>
+  <meta charset="utf-8">
+  <meta name="author" content="Peter Leonov, Daniel Rohrwild">
+  <title>Haustier-Umfrage</title>
+  <link rel="shortcut icon" type="image/x-icon" href="Bilder/tabbild.png"/>
+  <link rel="stylesheet" href="style.css">
+  <noscript>
+      window.alert("Sie haben JavaScript deaktiviert. Bitte aktivieren Sie JavaScript!")
+    </noscript>
+ </head>
+
+ <body> 
+  <header>
+   <img src="bilder/katze.png" width="250px" height="200px">
+   <h1>Umfrage zur Haustierhaltung <br> in Deutschland!</h1>
+   <img src="bilder/hase.png" width="200px" height="200px">
+  </header>
+  
+
+  <main>
+  
+  <p>Vielen Dank, dass sie den Weg zu unserer Haustier-Umfrage gefunden haben! <br>
+	 Wir ermitteln im Rahmen einer Studie der Hochschule Hof die Haustierhaltung in Deutschland. <br>
+  </p>
+  </main>
+  
+  <h2> Wir möchten Sie bitten, die nachfolgenden Fragen zu beantworten: </h2>
+  
+  <form>
+
+   <section name="frage1">
+    <label title="frage1">Wählen Sie ihr Geschlecht:</label> <br>
+	<input type="radio" name="frage0" class="radio">männlich</input>
+	<input type="radio" name="frage0">weiblich</input>
+	<input type="radio" name="frage0">divers</input>
+   </section>
+  
+	<section name="frage2">
+	 <label title="frage2">Wie alt sind Sie?</label> <br>
+	 <input type="number" min="1" max="130" style="background-color: #f5f5f5"></input>
+	 </section>
+	 
+	 <section name="frage3" id="frage3">
+     <label title="frage3">Haben Sie Haustiere?</label> <br>
+     <input type="radio" onchange="sichtbar()" name="frage1" style>ja</input> 
+     <input type="radio" onchange="unsichtbar()" name="frage1">nein</input> <!--Wenn keine Haustiere, dann JS "Warum haben Sie kein Haustier? alle weiteren Fragen ausblenden, Absendebuttun anzeigen --> 
+     </section>
+	 
+	<script>
+	 function unsichtbar()
+	 {	let frage4 = document.getElementById("frage4")
+		let frage5 = document.getElementById("frage5")
+		
+		let frage6 = document.getElementById("frage6")
+		let frage7 = document.getElementById("frage7")
+		
+		frage4.style.display = "";
+		frage5.style.display = "";
+		frage6.style.display = "none";
+		frage7.style.display = "none";
+	 }
+	 
+	 function sichtbar()
+	 {
+		let frage4 = document.getElementById("frage4")
+		let frage5 = document.getElementById("frage5")
+		let frage6 = document.getElementById("frage6")
+		let frage7 = document.getElementById("frage7")
+		
+		frage4.style.display = "none";
+		frage5.style.display = "none";
+		frage6.style.display = ""
+		frage7.style.display = ""
+	//	frage6.style.opacity = "0.2";
+	//	frage7.style.opacity = "0.2";
+	}
+	
+	function test()
+	{
+		window.alert("Vielen Dank für Ihre Teilnahme!")
+	}
+	</script>
+  
+   <section name="frage4" id="frage4">
+    <label title="frage4">Hätten Sie gerne ein Haustier?</label> <br>
+    <input type="radio" name="frage2">ja</input> 
+    <input type="radio" name="frage2">nein</input>
+    </section>
+  
+   <section name="frage5" id="frage5">
+    <label title="frage5">Warum haben Sie kein Haustier?</label> <br>
+    <input type="radio" name="keinHaustier">zu teuer</input>
+    <input type="radio" name="keinHaustier">keine Zeit</input>
+	</section>
+	
+	 <section name="frage6" id="frage6">
+     <label title="frage6">Wie viele Haustiere haben Sie?</label> <br>
+     <input type="number" min="1" max="9999" style="background-color: #f5f5f5"></input>
+     </section>
+
+ <section name="frage7" class="frage7" id="frage7">
+    <label title="frage7">Welche(s) Haustier(e) haben Sie?</label>
+	</br>
+	<div id="input_frage7">
+    <input type="checkbox">Hund</input></br>
+    <input type="checkbox">Katze</input></br>
+    <input type="checkbox">Kaninchen</input></br>
+    <input type="checkbox">Pferd</input></br>
+    <input type="checkbox">Vogel</input></br>
+    <input type="checkbox">Hamster</input></br>
+    <input type="checkbox">Fisch</input></br>
+    <input type="checkbox">Schlange</input></br>
+    <input type="checkbox">Andere</input></br>
+	</div>
+	</section>
+	
+	<div id="button">
+	<button type="submit" value="submit" id="submit_button" onclick="test()">Senden</button>
+	<button type="reset" value="reset" id="reset_button" onclick="test()">Abbrechen</button>
+	</div>
+  
+  </form>
+  
+  <footer>
+  <img src="bilder/faultier.png" width="150" height="100">
+  <img src="bilder/well_done_affe.png" width="100" height="100">
+   <nav> 
+    <a href="kontakt.html">Kontakt</a> |
+	<a href="datenschutz.html">Datenschutzerklärung</a> |
+	<a href="https://www.hof-university.de">Hochschule_Hof</a>
+   </nav>
+   <img src="bilder/turtle.png" width="150" height="75">
+   <img src="bilder/hippo.png" width="100" height="75">
+  </footer>
+  
+ </body>
+ 
+ <?php
+ echo "Hallo Welt";
+ ?>
+
+
+</html>

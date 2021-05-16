@@ -1,0 +1,89 @@
+h1 {
+	font-size: 50px;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 4%;
+	padding-right: 4%;
+	margin: 0px;
+	color: #cc8400;
+}
+
+header {
+	display: flex;
+	flex-shrink: 3;
+	flex-direction: row;
+	justify-content: center;
+	align-items:center;
+	background-color: #DDD;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #cc8400;
+}
+
+main {
+	padding-top: 10px;
+	font-size: 20px;
+	width: 100%;
+	text-align: center;
+}
+
+img {
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+body {	
+	background-color: #f5f5f5;
+	margin: 1px;
+	padding: 0px;
+	border-color: #cc8400;
+	border-style: solid;
+	border-width: 2px
+}
+
+div {
+	margin-top: 145px;
+	font-size: 23px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+#katze{
+	padding-top:40px;
+}
+
+a.back{
+	background-color: #DDD;
+	padding: 5px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #cc8400;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited{
+	color: black;
+}
+
+footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin-top: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #DDD;
+	font-size: 20px;
+	word-spacing: 3px;
+	border-top-color: #cc8400;
+	border-top-style: solid;
+	border-top-width: 2px;
+}
