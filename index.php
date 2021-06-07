@@ -32,23 +32,24 @@
 
    <section name="frage1">
     <label title="frage1">Wählen Sie ihr Geschlecht:</label> <br>
-	<input type="radio" name="geschlecht" class="radio" value="männlich" required="required">männlich</input>
-	<input type="radio" name="geschlecht" value="weiblich">weiblich</input>
-	<input type="radio" name="geschlecht" value="divers">divers</input>
+	<input type="radio" id="m" name="geschlecht" onchange="changed()" class="radio" value="männlich">männlich</input>
+	<input type="radio" id="w" name="geschlecht" onchange="changed()" value="weiblich">weiblich</input>
+	<input type="radio" id="d" name="geschlecht" onchange="changed()" value="divers">divers</input>
    </section>
   
 	<section name="frage2">
 	 <label title="frage2">Wie alt sind Sie?</label> <br>
-	 <input type="number" required="required" min="1" max="130" name="alter" style="background-color: #f5f5f5"></input>
+	 <input type="number" id="age" onchange="changed()" min="1" max="130" name="alter" style="background-color: #f5f5f5"></input>
 	 </section>
 	 
 	 <section name="frage3" id="frage3">
      <label title="frage3">Haben Sie Haustiere?</label> <br>
-     <input type="radio" name="hat_haustier" value="ja" onchange="pet()">ja</input> 
-     <input type="radio" name="hat_haustier" value="nein" onchange="no_pet()">nein</input> <!--Wenn keine Haustiere, dann JS "Warum haben Sie kein Haustier? alle weiteren Fragen ausblenden, Absendebuttun anzeigen --> 
+     <input type="radio" id="pets" name="hat_haustier" value="ja" onchange="pet()">ja</input> 
+     <input type="radio" id="nopets" name="hat_haustier" value="nein" onchange="no_pet()">nein</input> <!--Wenn keine Haustiere, dann JS "Warum haben Sie kein Haustier? alle weiteren Fragen ausblenden, Absendebuttun anzeigen --> 
      </section>
 	 
 	<script>
+		
 	//Fragen für "hat Haustiere-Frage" ausblenden, wenn User keine haustiere hat
 	 function no_pet()
 	 {	let frage4 = document.getElementById("frage4")
@@ -62,13 +63,7 @@
 		frage6.style.display = "none";
 		frage7.style.display = "none";
 		
-		document.getElementById("4").setAttribute("required", "required");
-		document.getElementById("5").setAttribute("required", "required");
-		
-		document.getElementById("submit_button").disabled=""
-		
-		document.getElementById("6").removeAttribute("required");
-		
+		changed();
 	 }
 	 
 	 //Fragen für "hat keine Haustiere-Fragen" ausblenden, wenn User haustiere hat
@@ -84,20 +79,30 @@
 		frage6.style.display = "block";
 		frage7.style.display = "block";
 		
-		document.getElementById("6").setAttribute("required", "required");
-		
-		document.getElementById("submit_button").disabled="true"
-		
-		document.getElementById("4").removeAttribute("required");
-		document.getElementById("5").removeAttribute("required");
-		
-	//	frage6.style.opacity = "0.2";
-	//	frage7.style.opacity = "0.2";
+		changed();
 	}
 	
 	//Prüfen, ob mind. eine Checkbox ausgewählt wurde:
 	function changed()
 	{
+		//Elemente Abfragen, ob checked/textfeld-wert
+		let m = document.getElementById("m").checked;
+		let w = document.getElementById("w").checked;
+		let d = document.getElementById("d").checked;
+		
+		let age = document.getElementById("age").value;
+		
+		let pets = document.getElementById("pets").checked;
+		let nopets = document.getElementById("nopets").checked;
+		
+		let anzahl = document.getElementById("6").value;
+		
+		let reason_teuer = document.getElementById("4").checked;
+		let reason_zeit = document.getElementById("4a").checked;
+		
+		let wunsch_ja = document.getElementById("5").checked;
+		let wunsch_nein = document.getElementById("5a").checked;
+		
 		let hund = document.getElementById("hund").checked
 		let katze = document.getElementById("katze").checked
 		let kaninchen = document.getElementById("kaninchen").checked
@@ -107,35 +112,88 @@
 		let fisch = document.getElementById("fisch").checked
 		let schlange = document.getElementById("schlange").checked
 		let andere = document.getElementById("andere").checked
-			
-
-		if (hund || katze || kaninchen || pferd || vogel || hamster || fisch || schlange || andere )
+		
+		//Hat Haustier Zweig:
+		if(pets && !nopets)
 		{
+			//alle Felder ausgefüllt
+		 if (( m || w || d) && age!="" && pets && !nopets &&  anzahl!="" && (hund || katze || kaninchen || pferd || vogel || hamster || fisch || schlange || andere))
+		 {
 			document.getElementById("submit_button").disabled=""
-		}
-		else 
-		{
+		 }
+		 else //Nicht alle Felder ausgefüllt
+		 {
 			document.getElementById("submit_button").disabled="true"
+		 }	 
+		}
+		else //Hat kein Haustier Zweig:
+		{
+			//Alle Felder ausgefüllt
+		 if ((m || w || d) && age!="" && nopets && !pets && (reason_teuer || reason_zeit) && (wunsch_ja || wunsch_nein))
+		 {
+			document.getElementById("submit_button").disabled=""
+		 }
+		 else //Nicht alle Felder ausgefüllt
+		 {
+			document.getElementById("submit_button").disabled="true"
+		 }
 		}
 		
+		//Alle Fragen zurücksetzen + "Sende"-Button disablen, da keine Felder ausgefüllt sind
+		function reset()
+		{
+		document.getElementById("m").checked = false
+		document.getElementById("w").checked = false
+		document.getElementById("d").checked = false
+		
+		document.getElementById("age").value=""
+		
+		document.getElementById("pets").checked = false
+		document.getElementById("nopets").checked = false
+		
+		document.getElementById("6").value=""
+		
+		document.getElementById("4").checked = false
+		document.getElementById("4a").checked = false
+		
+		document.getElementById("5").checked = false
+		document.getElementById("5a").checked = false
+		
+		document.getElementById("hund").checked = false
+		document.getElementById("katze").checked = false
+		ldocument.getElementById("kaninchen").checked = false
+		document.getElementById("pferd").checked = false
+		ocument.getElementById("vogel").checked = false
+		document.getElementById("hamster").checked = false
+		document.getElementById("fisch").checked = false
+		document.getElementById("schlange").checked = false
+		document.getElementById("andere").checked = false
+		
+		document.getElementById("submit_button").disabled="true"
+		}
 	}
-	</script>
+		function zur_auswertung()
+		{
+			location.href="http://localhost/umfrage/auswertung.php"
+		}
+	
+ </script>
   
   <section name="frage4" id="frage4">
     <label title="frage4">Warum haben Sie kein Haustier?</label> <br>
-    <input type="radio" id="4" name="grund" value="zu teuer">zu teuer</input>
-    <input type="radio" name="grund" value="keine Zeit">keine Zeit</input>
+    <input type="radio" id="4" onchange="changed()" name="grund" value="zu teuer">zu teuer</input>
+    <input type="radio" id="4a" onchange="changed()" name="grund" value="keine Zeit">keine Zeit</input>
 	</section>
   
    <section name="frage5" id="frage5">
     <label title="frage5">Hätten Sie gerne ein Haustier?</label> <br>
-    <input type="radio" name="wunsch" value="ja" id="5">ja</input> 
-    <input type="radio" name="wunsch" value="nein">nein</input>
+    <input type="radio" id="5" onchange="changed()" name="wunsch" value="ja" id="5">ja</input> 
+    <input type="radio" id="5a" onchange="changed()" name="wunsch" value="nein">nein</input>
     </section>
 	
 	 <section name="frage6" id="frage6">
      <label title="frage6">Wie viele Haustiere haben Sie?</label> <br>
-     <input type="number" id="6" min="1" max="9999" name="anzahl" style="background-color: #f5f5f5"></input>
+     <input type="number" id="6" min="1" onchange="changed()" max="9999" name="anzahl" style="background-color: #f5f5f5"></input>
      </section>
 
  <section name="frage7" class="frage7" id="frage7">
@@ -155,8 +213,8 @@
 	</section>
 	
 	<div id="button">
-	<button type="submit" value="submit" id="submit_button" disabled="true">Senden</button>
-	<button type="reset" value="reset" id="reset_button">Abbrechen</button>
+	<button type="submit" value="submit" onclick="zur_auswertung()" id="submit_button" disabled="true">Senden</button>
+	<button  id="reset_button" onclick="reset()">Abbrechen</button>
 	</div>
   
   </form>
@@ -176,6 +234,12 @@
  </body>
  
  <?php
+ 
+ $geschlecht = "";
+ $hat_haustier = "";
+ $wunsch= "";
+ $grund= "";
+ 
 	
 	if ((isset($_POST["geschlecht"])) == 1)
 		$geschlecht = $_POST["geschlecht"];
@@ -196,13 +260,14 @@
 	if ((isset($_POST["hat_haustier"])) == 1)
 		$hat_haustier = $_POST["hat_haustier"];
 	
+	
 	//echo var_dump($_POST);
 
 //$hat_haustier = $_POST["hat_haustier"];
 //Hat Haustiere:
 if($hat_haustier == "ja")
 {	
-echo "gesetzt!";
+//echo "gesetzt!";
 
 	//$katze = $_POST["katze"];
 	//$kaninchen = $_POST["kaninchen"];
@@ -229,7 +294,7 @@ echo "gesetzt!";
  }
  else
  {
-	 echo "Verbindung steht!";
+	 //echo "Verbindung steht!";
 	 /*mysqli_query($dbconnection, "insert into pets (geschlecht, age, anzahl_pets) 
 	 values ('".$geschlecht."',
 				'".$alter."',
@@ -289,12 +354,14 @@ mysqli_query($dbconnection, "insert into pets (geschlecht, age, anzahl_pets $db_
 				'".$anzahl."'
 				$db_values)");
 				
-$test = "insert into pets (geschlecht, age, anzahl_pets $db_table) 
+/*$test = "insert into pets (geschlecht, age, anzahl_pets $db_table) 
 		values ( '".$geschlecht."',
 				'".$alter."',
 				'".$anzahl."'
 				$db_values)";
 				echo $test;
+				*/
+				
  }
  mysqli_close($dbconnection);
 }
@@ -302,7 +369,6 @@ $test = "insert into pets (geschlecht, age, anzahl_pets $db_table)
 //keine Haustiere:
 else
 {
-	echo "nicht gesetzt!";
 /*	echo "Hat Haustiere == nein!";
 	echo "<br>";
 	echo "Geschlecht: ".$geschlecht;
@@ -335,13 +401,6 @@ else
 				'".$alter."',
 				'".$wunsch."',
 				'".$grund."')");
-				
-$hallo = "insert into no_pets (geschlecht, age, wunsch, grund) 
-	 values ('".$geschlecht."',
-				'".$alter."',
-				'".$wunsch."',
-				'".$grund."')";
-				echo $hallo;
  }
  mysqli_close($dbconnection);	
 }
